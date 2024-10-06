@@ -1,5 +1,6 @@
 package com.spring_assignment.drone_fleet_management_system.entity;
 
+import com.spring_assignment.drone_fleet_management_system.enums.DroneStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,7 +26,9 @@ public class Drone {
     private String name;
     private String model;
     private double batteryPercentage;
-    private String status; // e.g., active, inactive, in-flight, charging
+
+    @Enumerated(EnumType.STRING)
+    private DroneStatus status; // e.g., active, inactive, in-flight, charging
     private double latitude;
     private double longitude;
     private double altitude;
