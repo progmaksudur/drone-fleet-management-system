@@ -26,6 +26,8 @@ public interface UserService {
 
     public void deactivateUser();
 
+    public void activateUser();
+
 
 
 
