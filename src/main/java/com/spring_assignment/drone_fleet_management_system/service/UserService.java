@@ -24,6 +24,9 @@ public interface UserService {
 
     public void verifyUserByPhone();
 
+    public void deactivateUser();
+
+
 
 
 
