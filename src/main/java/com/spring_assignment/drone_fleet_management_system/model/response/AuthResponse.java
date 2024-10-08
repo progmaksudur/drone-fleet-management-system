@@ -16,4 +16,5 @@ public class AuthResponse {
     private LocalDateTime timestamp;
     private int status;
     private String jwtToken;
+    private String message;
 }

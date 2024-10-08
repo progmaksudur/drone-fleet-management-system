@@ -1,6 +1,7 @@
 package com.spring_assignment.drone_fleet_management_system.service.impl;
 
 import com.spring_assignment.drone_fleet_management_system.entity.User;
+import com.spring_assignment.drone_fleet_management_system.enums.Roles;
 import com.spring_assignment.drone_fleet_management_system.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,7 +26,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return  org.springframework.security.core.userdetails.User.builder()
                 .username(user.getEmail())
                 .password(user.getPassword())
-                .roles(user.getRoles().toArray(new String[0]))
+                .roles(user.getRoles().stream()
+                        .map(Roles::name).toArray(String[]::new))
                 .build();
     }
 }

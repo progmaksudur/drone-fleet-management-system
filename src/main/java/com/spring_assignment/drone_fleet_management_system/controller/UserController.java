@@ -15,11 +15,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
 @RestController
+@RequestMapping("/api/v1")
 public class UserController {
 
     private UserService userService;
@@ -47,8 +49,9 @@ public class UserController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmailOrPhone(), request.getPassword()));
             UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmailOrPhone());
+            System.out.println(userDetails.getAuthorities());
             String jwt = jwtUtil.generateToken(userDetails.getUsername());
-            return new ResponseEntity<>(new AuthResponse(LocalDateTime.now(),HttpStatus.OK.value(),jwt), HttpStatus.OK);
+            return new ResponseEntity<>(new AuthResponse(LocalDateTime.now(),HttpStatus.OK.value(),jwt,"Log in successfully"), HttpStatus.OK);
         }catch (Exception e){
             System.out.println(e.toString());
             return new ResponseEntity<>("Incorrect username or password", HttpStatus.BAD_REQUEST);
