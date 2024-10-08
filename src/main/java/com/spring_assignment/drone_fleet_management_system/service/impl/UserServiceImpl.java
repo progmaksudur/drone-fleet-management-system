@@ -1,6 +1,7 @@
 package com.spring_assignment.drone_fleet_management_system.service.impl;
 
 import com.spring_assignment.drone_fleet_management_system.entity.User;
+import com.spring_assignment.drone_fleet_management_system.enums.Gender;
 import com.spring_assignment.drone_fleet_management_system.enums.Roles;
 import com.spring_assignment.drone_fleet_management_system.model.request.UserSignUpRequest;
 import com.spring_assignment.drone_fleet_management_system.model.request.UserUpdateRequest;
@@ -50,21 +51,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserDetails(Long userID) {
-
-      User user=  repository.findById(userID).orElseThrow(()-> new UsernameNotFoundException("User id -> "+userID+" not found"));
-
-        return modelMapper.map(user,UserDTO.class);
-    }
-
-    @Override
-    public UserDTO getUserDetailsByEmailOrPhone(String emailOrPhone) {
+    public User getUserDetails(String emailOrPhone) {
 
         User user=  (emailOrPhone.contains("@") ?
                 repository.findByEmail(emailOrPhone):
                 repository.findByPhone(emailOrPhone))
                 .orElseThrow(()-> new UsernameNotFoundException("User  -> "+emailOrPhone+" not found"));
+        return user;
+    }
 
+    @Override
+    public UserDTO getUserDetailsByEmailOrPhone(String emailOrPhone) {
+        System.out.println(emailOrPhone);
+        User user=  (emailOrPhone.contains("@") ?
+                repository.findByEmail(emailOrPhone):
+                repository.findByPhone(emailOrPhone))
+                .orElseThrow(()-> new UsernameNotFoundException("User  -> "+emailOrPhone+" not found"));
+        System.out.println(user.getId());
         return modelMapper.map(user,UserDTO.class);
     }
 
@@ -91,6 +94,12 @@ public class UserServiceImpl implements UserService {
 
 
         modelMapper.map(updateRequest,exestingUser);
+        if(updateRequest.getGender()==1){
+            exestingUser.setGender(Gender.MALE);
+        }
+        if(updateRequest.getGender()==2){
+            exestingUser.setGender(Gender.FEMALE);
+        }
 
         try {
             repository.save(exestingUser);

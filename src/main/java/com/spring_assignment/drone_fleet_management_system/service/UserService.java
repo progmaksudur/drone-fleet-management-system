@@ -1,5 +1,6 @@
 package com.spring_assignment.drone_fleet_management_system.service;
 
+import com.spring_assignment.drone_fleet_management_system.entity.User;
 import com.spring_assignment.drone_fleet_management_system.model.request.UserSignUpRequest;
 import com.spring_assignment.drone_fleet_management_system.model.request.UserUpdateRequest;
 import com.spring_assignment.drone_fleet_management_system.model.response.UserDTO;
@@ -11,7 +12,7 @@ public interface UserService {
 
     public String createUser(UserSignUpRequest userSignUpRequest);
 
-    public UserDTO getUserDetails(Long userID);
+    public User getUserDetails(String emailOrPhone);
 
     public UserDTO getUserDetailsByEmailOrPhone(String emailOrPhone);
 
