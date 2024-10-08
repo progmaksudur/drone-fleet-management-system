@@ -41,6 +41,8 @@ public class User {
     private boolean userVerifiedByEmail;
     private boolean userVerifiedByPhone;
 
+    private boolean userActivated;
+
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING) // Store enum as String in the database

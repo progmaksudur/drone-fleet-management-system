@@ -1,4 +1,4 @@
-package com.spring_assignment.drone_fleet_management_system.service;
+package com.spring_assignment.drone_fleet_management_system.service.impl;
 
 import com.spring_assignment.drone_fleet_management_system.entity.User;
 import com.spring_assignment.drone_fleet_management_system.repository.UserRepository;
