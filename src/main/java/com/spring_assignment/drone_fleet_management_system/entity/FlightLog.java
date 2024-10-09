@@ -22,8 +22,8 @@ public class FlightLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "drone_id",nullable = false)
-    private Drone droneId;
+    @JoinColumn(name = "drone",nullable = false)
+    private Drone drone;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private double distance;
@@ -31,7 +31,7 @@ public class FlightLog {
     private double avgSpeed;
     private double maxSpeed;
     private double lowestSpeed;
-    private Long userId;
+
 
     @CreationTimestamp
     private LocalDateTime createdAt;
