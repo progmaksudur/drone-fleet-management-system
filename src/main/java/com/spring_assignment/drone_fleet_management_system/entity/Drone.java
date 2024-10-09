@@ -37,7 +37,7 @@ public class Drone {
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "droneId",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "drone",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<FlightLog> flightLogList;
 
     @CreationTimestamp

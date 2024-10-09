@@ -1,5 +1,6 @@
 package com.spring_assignment.drone_fleet_management_system.service;
 
+import com.spring_assignment.drone_fleet_management_system.entity.Drone;
 import com.spring_assignment.drone_fleet_management_system.entity.User;
 import com.spring_assignment.drone_fleet_management_system.model.request.DroneCreateRequest;
 import com.spring_assignment.drone_fleet_management_system.model.response.DroneDto;
@@ -10,6 +11,7 @@ public interface DroneService {
 
         public DroneDto createDroneInfo(DroneCreateRequest createRequest, User user);
         public DroneDto getSpecificDroneInfo(Long id);
+        public Drone getDrone(Long id);
         public List<DroneDto> getDronesForSpecificUser(User user);
         public List<DroneDto> getALlDrones();
         public void deleteSpecificDrone(Long id);
