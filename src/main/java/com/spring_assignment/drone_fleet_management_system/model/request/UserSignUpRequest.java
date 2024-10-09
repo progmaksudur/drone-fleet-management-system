@@ -28,7 +28,6 @@ public class UserSignUpRequest {
     private String email;
     @NotBlank(message = "Please provide valid phone")
     @NotNull(message = "Please provide valid phone")
-    @Pattern(regexp = "^\\\\+?[0-9]{10,15}$",message = "Please provide valid phone")
     private String phone;
     @NotBlank(message = "Please provide password")
     @NotNull(message = "Please provide password")
