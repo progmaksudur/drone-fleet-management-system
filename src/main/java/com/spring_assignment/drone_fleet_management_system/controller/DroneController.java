@@ -65,30 +65,32 @@ public class DroneController {
 
     }
 
-    @PostMapping("/flight/create")
+    @PostMapping("/flightLog/create")
     public ResponseEntity<?> createFlightLog(@RequestBody FlightLogRequest request){
         Drone drone=droneService.getDrone(request.getDroneId());
+
+        System.out.println(drone.getId());
 
         return new ResponseEntity<>(flightLogService.createFlightLog(request,drone), HttpStatus.OK);
     }
 
-    @PutMapping("/flight/update")
+    @PutMapping("/flightLog/update")
     public ResponseEntity<?> updateFlightLog(@RequestBody FlightLogRequest request,@RequestParam long id){
 
         return new ResponseEntity<>(flightLogService.updateFlightLog(request,id), HttpStatus.OK);
     }
 
-    @GetMapping("/flight/getFlightLog")
+    @GetMapping("/flightLog/getFlightLog")
     public ResponseEntity<?> getFlightLog(@RequestParam Long id){
 
         return new ResponseEntity<>(flightLogService.getFlightLog(id), HttpStatus.OK);
     }
-    @GetMapping("/flight/getAllFlightLog")
+    @GetMapping("/flightLog/getAllFlightLog")
     public ResponseEntity<?> getAllFlightLog(){
 
         return new ResponseEntity<>(flightLogService.getAllFlightLog(), HttpStatus.OK);
     }
-    @GetMapping("/flight/getSpecificDroneAllFlightLog")
+    @GetMapping("/flightLog/getSpecificDroneAllFlightLog")
     public ResponseEntity<?> getAllFlightLogForSpecificDrone(@RequestParam long id){
         Drone drone=droneService.getDrone(id);
 

@@ -1,6 +1,7 @@
 package com.spring_assignment.drone_fleet_management_system.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.spring_assignment.drone_fleet_management_system.enums.Gender;
 import com.spring_assignment.drone_fleet_management_system.enums.Roles;
 import jakarta.persistence.*;
@@ -50,9 +51,11 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @JsonManagedReference
     private UserAddress address;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Drone> droneList;
 
     @CreationTimestamp

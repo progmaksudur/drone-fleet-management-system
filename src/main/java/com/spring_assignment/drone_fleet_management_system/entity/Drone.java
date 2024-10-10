@@ -1,5 +1,7 @@
 package com.spring_assignment.drone_fleet_management_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.spring_assignment.drone_fleet_management_system.enums.DroneStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,9 +38,11 @@ public class Drone {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id",nullable = false)
+    @JsonBackReference
     private User user;
 
     @OneToMany(mappedBy = "drone",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<FlightLog> flightLogList;
 
     @CreationTimestamp

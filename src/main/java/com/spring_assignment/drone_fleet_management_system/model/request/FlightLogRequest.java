@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FlightLogRequest {
-    private long droneId;
-    private double distance;
-    private double maxAltitude;
-    private double avgSpeed;
-    private double maxSpeed;
-    private double lowestSpeed;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private Long droneId;
+    private Double distance;
+    private Double maxAltitude;
+    private Double avgSpeed;
+    private Double maxSpeed;
+    private Double lowestSpeed;
+    private String startTime;
+    private String endTime;
 }

@@ -8,6 +8,7 @@ import com.spring_assignment.drone_fleet_management_system.model.request.FlightL
 import com.spring_assignment.drone_fleet_management_system.model.response.FlightLogDTO;
 import com.spring_assignment.drone_fleet_management_system.repository.FlightLogRepository;
 import com.spring_assignment.drone_fleet_management_system.service.FlightLogService;
+import com.spring_assignment.drone_fleet_management_system.util.FlighLogUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -27,41 +28,42 @@ public class FlightLogServiceImpl implements FlightLogService {
     @Override
     public FlightLogDTO createFlightLog(FlightLogRequest request,Drone drone) {
 
-        FlightLog createdLog=modelMapper.map(request,FlightLog.class);
-        createdLog.setDrone(drone);
-        drone.setFlightLogList(List.of(createdLog));
+        FlightLog createdLog =  FlighLogUtils.convartFlightLog(request,drone);
+        System.out.println(createdLog.toString());
+        FlightLog flightLog=repository.save(createdLog);
 
-        return modelMapper.map(repository.save(createdLog),FlightLogDTO.class);
+        return FlighLogUtils.convartFlightLogDto(drone,flightLog);
     }
 
     @Override
     public FlightLogDTO getFlightLog(Long id) {
-        FlightLog flightLog=repository.findById(id).orElseThrow(()->new ResourceNotFoundException("This drone id :"+id+" do not have flight logs"));
-        return modelMapper.map(flightLog,FlightLogDTO.class);
+        FlightLog log=repository.findById(id).orElseThrow(()->new ResourceNotFoundException("This drone id :"+id+" do not have flight logs"));
+        return  FlighLogUtils.convartFlightLogDto(log.getDrone(),log);
     }
 
     @Override
     public List<FlightLogDTO> getSpecificFlightLogForDrone(Drone drone) {
        List<FlightLog> flightLogList = repository.findByDrone(drone);
-        return flightLogList.stream().map((flightLog)->modelMapper.map(flightLog,FlightLogDTO.class)).collect(Collectors.toList());
+        return flightLogList.stream().map((flightLog)->FlighLogUtils.convartFlightLogDto(drone,flightLog)).collect(Collectors.toList());
     }
 
     @Override
     public List<FlightLogDTO> getAllFlightLog() {
-        List<FlightLog> flightLogList = repository.findAll();
-        return flightLogList.stream().map((flightLog)->modelMapper.map(flightLog,FlightLogDTO.class)).collect(Collectors.toList());
+        List<FlightLog> flightLogs=repository.findAll();
+        return flightLogs.stream().map((logs)->FlighLogUtils.convartFlightLogDto(logs.getDrone(),logs)).collect(Collectors.toList());
     }
 
     @Override
     public FlightLogDTO updateFlightLog(FlightLogRequest request,Long id) {
         FlightLog existingFlightLog=repository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("Flight log not found for this id ->"+id));
-        modelMapper.getConfiguration().setPropertyCondition(context -> {
-            Object sourceValue = context.getSource();
-            return sourceValue != null && !(sourceValue instanceof String && ((String) sourceValue).isEmpty());
-        });
-        modelMapper.map(request,existingFlightLog);
 
-        return modelMapper.map(repository.save(existingFlightLog),FlightLogDTO.class);
+
+        ///Custom mapping for this
+
+        FlightLog updateLog= repository.save(FlighLogUtils.getUpdateFlightLog(request,existingFlightLog));
+
+        return FlighLogUtils.convartFlightLogDto(updateLog.getDrone(),updateLog);
+//        return FlighLogUtils.getUpdateFlightLog(request);
     }
 }

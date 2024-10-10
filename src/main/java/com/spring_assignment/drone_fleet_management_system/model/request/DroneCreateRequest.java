@@ -15,8 +15,8 @@ public class DroneCreateRequest {
     private String serialNumber;
     private String name;
     private String model;
-    private double batteryPercentage;
-    private double latitude;
-    private double longitude;
-    private double altitude;
+    private Double batteryPercentage;
+    private Double latitude;
+    private Double longitude;
+    private Double altitude;
 }
